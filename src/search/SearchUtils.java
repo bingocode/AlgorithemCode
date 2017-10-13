@@ -1,9 +1,14 @@
+package search;
+
 /**
  * Created by admin on 2017/9/19.
  */
 public class SearchUtils {
     /**
      * 二分法查找
+     * 每次折半先看看是否是中间的元素a[mid]若是则返回；
+     * 否则，递归地折半查找a[left,mid-] 和 a[mid+1,right]
+     * 直到left 指针与 right相遇（left >= right）还没有找到则说明不存在。
      */
     public static int binarySearch(int a[],int target){
         return binarySearch(a,0,a.length-1,target);

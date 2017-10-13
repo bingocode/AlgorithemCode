@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package sort;
 
 /**
  * Created by admin on 2017/9/12.
@@ -23,7 +23,7 @@ public class SortTest {
             System.out.print(a[i]+" ");
         }
         System.out.println();
-        SortUtils.radixSort(a);
+        SortUtils.MergeBUSort(a);
         for(int i =0;i<len;i++){
             System.out.print(a[i]+" ");
         }
