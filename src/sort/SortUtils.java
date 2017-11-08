@@ -26,6 +26,7 @@ public class SortUtils {
 
 
 
+
     /**
      * 选择排序（每次选出最小元素，记录其下标，与前面第i个元素交换）
      * @param a
@@ -44,6 +45,20 @@ public class SortUtils {
             a[i] = temp;
         }
     }
+    /*
+    public void selectsort(int[] a){
+        int n = a.length;
+        for(int i = 0; i< n-1; i++）
+        {
+            int min = i;
+            for(int j = i+1;j<n; j++){
+                if(a[min] > a[j])
+                    min = j;
+             }
+            swap(min,i);
+        }
+    }
+     */
 
 
 
@@ -73,15 +88,16 @@ public class SortUtils {
         }
     }
 
+
     /*
         public void sort(int[] a ){
             int n = a.length;
             for(int i = 1; i<n; i++)
-                for(int j = i; j>=1;j--)
-                    if(a[j] < a[j-1])
-                    swap(a,,j,j-1)
+              for(int j = i; j>=1;j--){
+                   if(a[j] < a[j-1])
+                   swap(a,j,j-1);
+              }
         }
-
      */
 
     /**
@@ -109,6 +125,23 @@ public class SortUtils {
             h=h/3;//计算下一轮的步长
         }
     }
+    /*
+        public void shellsort(int [] a){
+            int n = a.length;
+            int h = 1;
+            while(h < n/3)
+            h = 3*h+1;
+            while(h>0){
+                for(int i = h; i<n; i++)
+                    for(int j=i; j>=h;j-=h)
+                        if(a[j] < a[j-h])
+                            swap(a, j, j-h);
+                 h = h/3;
+            }
+
+        }
+
+     */
 
 
     public static void print(int[] a){
@@ -186,7 +219,47 @@ public class SortUtils {
             a[k+left] = temp[k];
     }
 
+    /*
+        public void merageSort(int[] a){
+            int[] temp = new int[a.length];
+            mergeSort(a,temp,0,a.length-1);
 
+        }
+
+        public void mergeSort(int[] a, int[] temp, int left, int right){
+            if(left >= right)
+                return;
+            int mid = (left + right)/2;
+            mergeSort(a, temp, left, mid);
+            mergeSort(a, temp, mid +1 , right);
+            merge(a, temp, left, mid, right);
+        }
+
+        public void merge(int[] a, int[] temp, int left, int mid, int right){
+            int len = right - left +1;
+            int i = left;
+            int j = mid +1;
+            int k = 0;
+            while(i <= mid && j <=right){
+                if(a[i] < a[j]){
+                    temp[k++] = a[i++];
+                }
+                else{
+                    temp[k++] = a[j++};
+                }
+            }
+         while(i<=mid){
+            temp[k++] = a[i++];
+        }
+
+        while (j<=right){
+            temp[k++] = a[j++];
+        }
+            for(k = 0; k <len; i++)
+                a[left +k] = temp[k];
+        }
+
+     */
     /**
      * 快速排序
      * 递归地分区：（初始状态下a[left,right]即a[0..length-1]
@@ -219,6 +292,40 @@ public class SortUtils {
         a[left] = pivot; //将之前的基准（第一个）数放在分好区的中间的left（left==right)位置（小于left都比a[left]小，大于的都大）。
         return left;
     }
+
+
+    /*
+    public void quicksort(int[] a)
+   {
+        quickSort(a, 0, a.length - 1 );
+   }
+   public void quicksort(int[] a. int left, int right){
+        if(left >= right)
+        return ;
+        int pivot = partition(a, left, right);
+        quicksort(a, left, pivot);
+        quicksort(a, pivot+1, right);
+   }
+
+   public int partition(int[] a, int left, int right){
+        int pivot = a[left];
+        while(left < right){
+            wihle(left < right && a[right] >= pivot)
+                right --;
+            a[left] = a[right];
+
+            while(left < right && a[left] <= pivot)
+                left ++;
+            a[right] = a[left];
+        }
+        a[left] = pivot;
+        return left;
+    }
+
+
+     */
+
+
     /**
      * 堆排序
      * http://www.cnblogs.com/chengxiao/p/6129630.html
