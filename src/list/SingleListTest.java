@@ -1,32 +1,52 @@
 package list;
 
 
+import java.util.List;
+
 /**
  * Created by admin on 2017/9/19.
  */
 public class SingleListTest {
+
+public static class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
     public static void main(String[] args){
-        SingleList list = new SingleList();
-        list.insert(new Node(1));
-        list.insert(new Node(2));
-        list.insert(new Node(3));
-        list.insert(new Node(4));
-        list.insert(new Node(5));
-        try {
-            list.insertByIndex(new Node(6),3);
-            list.delete(4);
-            System.out.println("访问下标4节点"+list.get(4).data);
-            System.out.println("总长度"+list.lenght());
-        } catch (Exception e) {
-            e.printStackTrace();
+        ListNode p1 = new ListNode(0);
+        ListNode p2;
+        ListNode p0 = p1;
+        for (int i = 1; i< 6; i++) {
+             p2 = new ListNode(i);
+             p1.next = p2;
+             p1 = p2;
         }
-        System.out.println("正常排列");
-        list.print();
-        System.out.println("逆序输出");
-        list.reverseprint();
-        System.out.println("逆转序列");
-        list.reverseList();
-        list.print();
+        printList(p0);
+        ReverseList(p0);
+        printList(p0);
+    }
+
+    public static ListNode ReverseList(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode pre = head.next;
+        ListNode post = null;
+        while(pre != null) {
+            pre.next = post;
+
+        }
+        return pre;
+    }
+
+    public static void printList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val + " ");
+            head = head.next;
+        }
+        System.out.println();
     }
 
 }

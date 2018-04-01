@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 /**
  * Created by admin on 2017/9/12.
+ * https://github.com/hustcc/JS-Sorting-Algorithm
  */
 public class SortUtils {
     /**
@@ -21,8 +22,9 @@ public class SortUtils {
                 a[j+1] = a[j];
                 a[j] = temp;
             }
-            }
+        }
     }
+
 
 
 
@@ -31,7 +33,7 @@ public class SortUtils {
      * 选择排序（每次选出最小元素，记录其下标，与前面第i个元素交换）
      * @param a
      */
-    public static void selectionSort(int[] a){
+/*    public static void selectionSort(int[] a){
         int len = a.length;
         int minIndex;
         for(int i=0;i<len -1;i++ ){
@@ -44,21 +46,25 @@ public class SortUtils {
             a[minIndex] = a[i];
             a[i] = temp;
         }
-    }
-    /*
-    public void selectsort(int[] a){
-        int n = a.length;
-        for(int i = 0; i< n-1; i++）
-        {
-            int min = i;
-            for(int j = i+1;j<n; j++){
-                if(a[min] > a[j])
-                    min = j;
-             }
-            swap(min,i);
+    }*/
+
+public static void selectSort(int[] a){
+    int n = a.length;
+    for (int i = 0; i< n-1; i++) {
+        int min = i;
+        for(int j = i+1; j<n; j++) {
+            if(a[j] < a[min]) {
+                min = j;
+            }
+        }
+        if(min != i) {
+            int temp = a[i];
+            a[i] = a[min];
+            a[min] = temp;
         }
     }
-     */
+}
+
 
 
 
@@ -75,7 +81,7 @@ public class SortUtils {
      * 依次类推，每次插入都是交换相邻元素得到。
      * 1
      */
-    public  static  void  insertionSort(int a[]){
+/*    public  static  void  insertionSort(int a[]){
         int len = a.length;
         for(int i = 1;i<len;i++){
             for(int j = i;j>=1;j--){
@@ -86,26 +92,29 @@ public class SortUtils {
                 }
             }
         }
-    }
+    }*/
 
 
-    /*
-        public void sort(int[] a ){
+        public static void insertsort(int[] a ){
             int n = a.length;
-            for(int i = 1; i<n; i++)
-              for(int j = i; j>=1;j--){
-                   if(a[j] < a[j-1])
-                   swap(a,j,j-1);
-              }
+            if (n <= 1) return;
+            for(int i = 1; i<n; i++) {
+                for (int j = i; j>=1; j--) {
+                    if(a[j] <a[j-1]) {
+                        int temp = a[j];
+                        a[j] = a[j-1];
+                        a[j-1] = temp;
+                    }
+                }
+            }
         }
-     */
 
     /**
      * 希尔排序
      * `1 选定步长： int h =1; while(h<n/3)h = h*3+1;
      * 2 步长从大到小循环插入排序。(每次递减h = h/3.
      */
-    public static void shellSort(int[] a){
+/*    public static void shellSort(int[] a){
         int len=a.length;
         int h=1;
         while(h<len/3) h=3*h+1;//计算首次步长
@@ -124,24 +133,28 @@ public class SortUtils {
             }
             h=h/3;//计算下一轮的步长
         }
-    }
-    /*
-        public void shellsort(int [] a){
+    }*/
+
+        public static void shellsort(int [] a){
             int n = a.length;
             int h = 1;
-            while(h < n/3)
-            h = 3*h+1;
-            while(h>0){
-                for(int i = h; i<n; i++)
-                    for(int j=i; j>=h;j-=h)
-                        if(a[j] < a[j-h])
-                            swap(a, j, j-h);
-                 h = h/3;
-            }
-
+            while(h<n/3)
+                h = 3*h+1;
+           while (h>0) {
+               for(int i = h; i<n; i= i+1) {
+                   for (int j = i; j >= h; j = j - h) {
+                       if (a[j] < a[j - h]) {
+                           int temp = a[j];
+                           a[j] = a[j - h];
+                           a[j - h] = temp;
+                       }
+                   }
+               }
+               h = h/3;
+           }
         }
 
-     */
+
 
 
     public static void print(int[] a){
@@ -183,21 +196,8 @@ public class SortUtils {
         }
     }
 
-    public static void MergeSortBU(int[] a){
-        int n = a.length;
-        int[] temp = new int[n];
-        for(int i = 1; i<n; i = i*2){
-            for(int left = i; left < n-i; left = left + i*2){
-                int mid = left +i -1;
-                int right = Math.min(left + 2*i -1,n-1);
-                merge(a,temp,left,mid,right);
-            }
-        }
-    }
-
-    //合并两个排好序的数组a[left..mid] a[mid+1..right],aus[]为临时存放数组
+    //合并两个排好序的数组a[left..mid] a[mid+1..right],temp[]为临时存放数组
     public static void merge(int a[], int temp[], int left, int mid, int right){
-        int len = right - left + 1;
         int i = left, j = mid + 1, k = 0;
 
         while(i<=mid && j<=right){
@@ -214,52 +214,47 @@ public class SortUtils {
         while (j<=right){
             temp[k++] = a[j++];
         }
-
-        for(k=0;k<len;k++)
-            a[k+left] = temp[k];
+        for(i=0;i<k;i++)
+            a[left +i] = temp[i];
     }
 
-    /*
-        public void merageSort(int[] a){
-            int[] temp = new int[a.length];
-            mergeSort(a,temp,0,a.length-1);
-
+    public static void merge1(int a[], int temp[], int left, int mid, int right) {
+        int i = left, j = mid + 1, k = 0;
+        while(i<=mid && j<=right){
+            if(a[i] < a[j])
+                temp[k++] = a[i++];
+            else
+                temp[k++] = a[j++];
         }
 
-        public void mergeSort(int[] a, int[] temp, int left, int right){
-            if(left >= right)
-                return;
-            int mid = (left + right)/2;
-            mergeSort(a, temp, left, mid);
-            mergeSort(a, temp, mid +1 , right);
-            merge(a, temp, left, mid, right);
-        }
-
-        public void merge(int[] a, int[] temp, int left, int mid, int right){
-            int len = right - left +1;
-            int i = left;
-            int j = mid +1;
-            int k = 0;
-            while(i <= mid && j <=right){
-                if(a[i] < a[j]){
-                    temp[k++] = a[i++];
-                }
-                else{
-                    temp[k++] = a[j++};
-                }
-            }
-         while(i<=mid){
+        while(i<=mid){
             temp[k++] = a[i++];
         }
 
         while (j<=right){
             temp[k++] = a[j++];
         }
-            for(k = 0; k <len; i++)
-                a[left +k] = temp[k];
-        }
 
-     */
+        for(i =0;i<k;i++) {
+            a[left+i] = temp[i];
+        }
+    }
+
+    public static void  MergeSort1(int[] a) {
+        int n = a.length;
+        int[] temp = new int[n];
+        MergeSort1(a,temp,0,n-1);
+    }
+
+    public static void MergeSort1(int[] a, int[] temp, int left, int right) {
+        if(left >= right) return;
+        int mid = (left + right)/2;
+        MergeSort1(a,temp,left,mid);
+        MergeSort1(a,temp,mid+1,right);
+        merge1(a,temp,left,mid,right);
+    }
+
+
     /**
      * 快速排序
      * 递归地分区：（初始状态下a[left,right]即a[0..length-1]
@@ -294,44 +289,17 @@ public class SortUtils {
     }
 
 
-    /*
-    public void quicksort(int[] a)
-   {
-        quickSort(a, 0, a.length - 1 );
-   }
-   public void quicksort(int[] a. int left, int right){
-        if(left >= right)
-        return ;
-        int pivot = partition(a, left, right);
-        quicksort(a, left, pivot);
-        quicksort(a, pivot+1, right);
-   }
-
-   public int partition(int[] a, int left, int right){
-        int pivot = a[left];
-        while(left < right){
-            wihle(left < right && a[right] >= pivot)
-                right --;
-            a[left] = a[right];
-
-            while(left < right && a[left] <= pivot)
-                left ++;
-            a[right] = a[left];
-        }
-        a[left] = pivot;
-        return left;
-    }
-
-
-     */
-
-
     /**
-     * 堆排序
+     * 堆排序(堆是完全二叉树)
      * http://www.cnblogs.com/chengxiao/p/6129630.html
+     * https://www.cnblogs.com/0zcl/p/6737944.html
+     * 初始化大顶堆时 是从最后一个有子节点开始往上调整最大堆。而堆顶元素(最大数)与堆最后一个数交换后，
+     * 需再次调整成大顶堆，此时是从上往下调整的。
+     不管是初始大顶堆的从下往上调整，还是堆顶堆尾元素交换，每次调整都是从父节点、左孩子节点、右孩子节点三者中选择最大者跟父节点进行交换，
+     交换之后都可能造成被交换的孩子节点不满足堆的性质，因此每次交换之后要重新对被交换的孩子节点进行调整
      */
     public static void heapSort(int[] a){
-        for(int i = a.length/2 -1; i>=0;i--) //构造初始最大堆：从最后一个非叶子结点（也就是最后一个含有子节点的节点）开始，遍历从右到左，从下岛上（逻辑上也就是该数组元素之前的）,让这些节点依次变得满足堆的性质就构成了堆。
+        for(int i = a.length/2 -1; i>=0;i--) //构造初始最大堆：从最后一个非叶子结点（a.length/2 - 1）开始，遍历从右到左，从下到上（逻辑上也就是该数组元素之前的）,让这些节点依次变得满足堆的性质就构成了堆。
             adjustHeap(a,i,a.length);
         for(int j = a.length-1; j>0; j--){ //依次取出第一个元素和最后一个元素交换，然后重新调整构造最大堆（要调整的堆的大小递减）。
             int temp = a[0];
@@ -350,11 +318,11 @@ public class SortUtils {
         int largest = i;
         int left = 2*i + 1;
         int right = 2*i + 2;
-        if(left < len && a[left] > a[largest])
+        if(left < len && a[left] > a[largest]) //如果有左子节点，并且左子节点更大
             largest = left;
-        if(right < len && a[right] > a[largest])
+        if(right < len && a[right] > a[largest]) //如果有右子节点，并且右子节点更大
             largest = right;
-        if(largest != i){
+        if(largest != i){ //交换当前节点与最大孩子节点位置。交换后，还需使得被交换的位置到len位置满足堆性质
             int temp = a[i];
             a[i] = a[largest];
             a[largest] = temp;

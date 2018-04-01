@@ -7,6 +7,7 @@ package tree;
 树节点（二叉树）
  */
 public class TreeNode {
+    public int val;
     public int data;
     public TreeNode left;
     public TreeNode right;

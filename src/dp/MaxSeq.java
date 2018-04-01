@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 /**
  * 求最大连续子数列和
+ * 状态定义： F(i) ： 以a[i]结尾的所有子序列中的最大和
+ * 状态转移： F(i) = Max(F(i-1) + a[i] , a[i])
  */
 public class MaxSeq {
 

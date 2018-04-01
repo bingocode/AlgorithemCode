@@ -1,5 +1,6 @@
 package tree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -18,6 +19,28 @@ public class BinaryTree {
     /*
     根据一个树的根节点复制来构造树
      */
+
+    private static ArrayList<ArrayList<Integer>> listall = new ArrayList<ArrayList<Integer>>();
+    private static ArrayList<Integer> list = new ArrayList<>();
+
+    /**
+     * 查找和为target的所有路径
+     * @param root
+     * @param target
+     * @return
+     */
+    public static ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target){
+        if(root == null)
+            return  listall;
+        list.add(root.val);
+        target = target - root.val;
+        if(target == 0 && root.left == null && root.right == null)
+            listall.add(new ArrayList<Integer>(list));
+        FindPath(root.left,target);
+        FindPath(root.right,target);
+        list.remove(list.size() - 1);
+        return listall;
+    }
     public BinaryTree(TreeNode root) {
         this.root = copy(root);
     }
@@ -367,6 +390,46 @@ public class BinaryTree {
         }
     return  sb.toString();
     }
+
+    /**
+     * 求树的深度
+     * @param root
+     * @return
+     */
+    public int TreeDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        int left = TreeDepth(root.left);
+        int right = TreeDepth(root.right);
+        return Math.max(left,right) + 1;
+    }
+
+    /**
+     * 判断是否平衡二叉树
+     */
+    public boolean IsBalanced_Solution(TreeNode root) {
+        int[] h = new int[1];
+        return IsBalanced_Solution(root,h);
+    }
+    public boolean IsBalanced_Solution(TreeNode root, int[] h){
+        if(root == null){
+            h[0] = 0;
+            return true;
+        }
+        int[] left = new int[1];
+        int[] right = new int[1];
+        boolean bleft = IsBalanced_Solution(root.left,left);
+        boolean bright = IsBalanced_Solution(root.right,right);
+        if(bleft && bright){
+            int dif = left[0] - right[0];
+            if(dif <=1 && dif >=-1){
+                h[0] = left[0] > right[0] ? left[0] + 1: right[0] +1;
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }
