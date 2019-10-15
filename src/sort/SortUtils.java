@@ -27,26 +27,10 @@ public class SortUtils {
 
 
 
-
-
     /**
      * 选择排序（每次选出最小元素，记录其下标，与前面第i个元素交换）
      * @param a
      */
-/*    public static void selectionSort(int[] a){
-        int len = a.length;
-        int minIndex;
-        for(int i=0;i<len -1;i++ ){
-            minIndex = i;
-            for(int j = i+1;j<len;j++){
-                if(a[j]< a[minIndex])
-                    minIndex = j;
-            }
-            int temp = a[minIndex];
-            a[minIndex] = a[i];
-            a[i] = temp;
-        }
-    }*/
 
 public static void selectSort(int[] a){
     int n = a.length;
@@ -67,7 +51,6 @@ public static void selectSort(int[] a){
 
 
 
-
     public static void swap(int[] a, int i, int j){
         int temp = a[i];
         a[i] =  a[j];
@@ -79,23 +62,12 @@ public static void selectSort(int[] a){
      * 将a[1]插入到a[0]中后a[0] ,a[1] 有序
      * 将a[2]插入到a[0],a[1],后，a[0],a[1],a[2]有序
      * 依次类推，每次插入都是交换相邻元素得到。
-     * 1
+     *
      */
-/*    public  static  void  insertionSort(int a[]){
-        int len = a.length;
-        for(int i = 1;i<len;i++){
-            for(int j = i;j>=1;j--){
-                if(a[j]<a[j-1]){
-                    int temp = a[j];
-                    a[j] = a[j-1];
-                    a[j-1]= temp;
-                }
-            }
-        }
-    }*/
 
 
-        public static void insertsort(int[] a ){
+
+      public static void insertsort(int[] a ){
             int n = a.length;
             if (n <= 1) return;
             for(int i = 1; i<n; i++) {
@@ -114,28 +86,9 @@ public static void selectSort(int[] a){
      * `1 选定步长： int h =1; while(h<n/3)h = h*3+1;
      * 2 步长从大到小循环插入排序。(每次递减h = h/3.
      */
-/*    public static void shellSort(int[] a){
-        int len=a.length;
-        int h=1;
-        while(h<len/3) h=3*h+1;//计算首次步长
-        System.out.println("步长"+h);
-        while(h>0){
-            //将数组变为h步长有序
-            for(int i=h;i<len;i++){
-                //将a[i]插入到a[i-h],a[i-2h]...中（给定步长的插入排序）
-                for(int j=i;j>=h;j-=h)
-                    if(a[j]<a[j-h])
-                    {
-                        int temp = a[j-h];
-                        a[j-h] = a[j];
-                        a[j] = temp;
-                    }
-            }
-            h=h/3;//计算下一轮的步长
-        }
-    }*/
 
-        public static void shellsort(int [] a){
+
+     public static void shellsort(int [] a){
             int n = a.length;
             int h = 1;
             while(h<n/3)
@@ -218,42 +171,6 @@ public static void selectSort(int[] a){
             a[left +i] = temp[i];
     }
 
-    public static void merge1(int a[], int temp[], int left, int mid, int right) {
-        int i = left, j = mid + 1, k = 0;
-        while(i<=mid && j<=right){
-            if(a[i] < a[j])
-                temp[k++] = a[i++];
-            else
-                temp[k++] = a[j++];
-        }
-
-        while(i<=mid){
-            temp[k++] = a[i++];
-        }
-
-        while (j<=right){
-            temp[k++] = a[j++];
-        }
-
-        for(i =0;i<k;i++) {
-            a[left+i] = temp[i];
-        }
-    }
-
-    public static void  MergeSort1(int[] a) {
-        int n = a.length;
-        int[] temp = new int[n];
-        MergeSort1(a,temp,0,n-1);
-    }
-
-    public static void MergeSort1(int[] a, int[] temp, int left, int right) {
-        if(left >= right) return;
-        int mid = (left + right)/2;
-        MergeSort1(a,temp,left,mid);
-        MergeSort1(a,temp,mid+1,right);
-        merge1(a,temp,left,mid,right);
-    }
-
 
     /**
      * 快速排序
@@ -263,6 +180,35 @@ public static void selectSort(int[] a){
      * a[left,mid] a[mid+1,right]两块区。然后对这两块区域递归地进行上述分区步骤直到所有区只有一个元素退出。
      *
      */
+
+    public static void quick(int[] a) {
+        quick(a,0, a.length-1);
+    }
+
+    public static void quick(int[] a, int left, int right) {
+        if(left < right) {
+            int prov = part(a,left,right);
+            quick(a,left,prov);
+            quick(a,prov+1, right);
+        }
+    }
+
+    public static int part(int[] a, int left, int right) {
+        int prov = a[left];
+        while (left < right) {
+            while (left < right && a[right] >= prov) {
+                right--;
+            }
+            a[left] = a[right];
+            while (left < right && a[left] <= prov) {
+                left++;
+            }
+            a[right] = a[left];
+        }
+        a[left] = prov;
+        return  left;
+    }
+
     public static void quickSort(int[] a){
         quickSort(a,0,a.length-1);
     }
@@ -293,7 +239,7 @@ public static void selectSort(int[] a){
      * 堆排序(堆是完全二叉树)
      * http://www.cnblogs.com/chengxiao/p/6129630.html
      * https://www.cnblogs.com/0zcl/p/6737944.html
-     * 初始化大顶堆时 是从最后一个有子节点开始往上调整最大堆。而堆顶元素(最大数)与堆最后一个数交换后，
+     * 初始化大顶堆时 是从最后一个叶子节点开始往上调整最大堆。而堆顶元素(最大数)与堆最后一个数交换后，
      * 需再次调整成大顶堆，此时是从上往下调整的。
      不管是初始大顶堆的从下往上调整，还是堆顶堆尾元素交换，每次调整都是从父节点、左孩子节点、右孩子节点三者中选择最大者跟父节点进行交换，
      交换之后都可能造成被交换的孩子节点不满足堆的性质，因此每次交换之后要重新对被交换的孩子节点进行调整
