@@ -1,5 +1,8 @@
 package thread.producerandconsumer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by admin on 2017/10/21.
  */

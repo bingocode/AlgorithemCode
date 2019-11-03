@@ -1,5 +1,7 @@
 package thread.producerandconsumer;
 
+import java.util.Vector;
+
 /**
  * Created by admin on 2017/10/21.
  */
